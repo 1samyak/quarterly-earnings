@@ -1,38 +1,171 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quarterly Earnings — RevealJS</title>
 
-<head>
-    <title>All Students</title>
-</head>
+    <!-- RevealJS core CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css" id="theme">
 
-<body>
-    <h1>Students</h1>
-    {% if students %}
-    <table id="all-students" border="1">
-        <tr>
-            <th>SNo</th>
-            <th>Roll Number</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Actions</th>
-        </tr>
-        {% for idx, s in enumerate(students, start=1) %}
-        <tr>
-            <td>{{ idx }}</td>
-            <td><a href="{{ url_for('student_details', student_id=s.student_id) }}">{{ s.roll_number }}</a></td>
-            <td>{{ s.first_name }}</td>
-            <td>{{ s.last_name }}</td>
-            <td>
-                <a href="{{ url_for('update_student', student_id=s.student_id) }}" type="button">Update</a>
-                <a href="{{ url_for('delete_student', student_id=s.student_id) }}" type="button">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-    <p>No students enrolled.</p>
-    {% endif %}
-    <button onclick="location.href='{{ url_for('create_student') }}'">Add student</button>
-</body>
+    <!-- Highlight.js (for code highlighting) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/default.min.css">
 
+    <!-- KaTeX (math rendering) optional; Reveal Math plugin can also use MathJax -- using KaTeX here -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+
+    <style>
+      /* small custom theme touches */
+      .reveal { font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+      .chart { height: 360px; margin: 10px auto; }
+      .footer { font-size: 0.9rem; opacity: 0.8; }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- Title slide -->
+        <section>
+          <h1>Quarterly Earnings Report</h1>
+          <p><strong>Email: 24f2005560@ds.study.iitm.ac.in</strong></p</h1>
+          <p class="footer">Interactive presentation • Modern visualizations • Speaker notes included</p>
+          <aside class="notes">Welcome stakeholders — quick intro, mention agenda and timeline. Keep this slide short (30s).</aside>
+        </section>
+
+        <!-- Markdown slide (demonstration of Markdown support) -->
+        <section data-markdown>
+          <textarea data-template>
+## Highlights — Q3
+
+- Revenue up **8%** YoY
+- Operating margin improved by **1.2 pp**
+- Product A exceeded forecasts
+
+---
+
+## Next Steps
+
+1. Continue cost optimization
+2. Reinvest in cloud capacity
+3. Prepare for international launch
+
+*Contact: **24f2005560@ds.study.iitm.ac.in**
+          </textarea>
+        </section>
+
+        <!-- Slide with animated fragments -->
+        <section>
+          <h2>Key Drivers</h2>
+          <ul>
+            <li class="fragment">Increased subscription uptake</li>
+            <li class="fragment">Enterprise deals closed late in quarter</li>
+            <li class="fragment fade-up">Lower variable costs via supplier renegotiation</li>
+          </ul>
+          <aside class="notes">Each bullet should be discussed with brief evidence — show supporting backup slides if asked.</aside>
+        </section>
+
+        <!-- Code sample with syntax highlighting -->
+        <section>
+          <h2>Reproducible Analysis (Python)</h2>
+          <pre><code class="language-python"># Load and summarise financials
+import pandas as pd
+
+df = pd.read_csv('financials_q3.csv')
+summary = df.groupby('segment').agg({'revenue':'sum','cost':'sum'})
+summary['margin'] = (summary['revenue'] - summary['cost']) / summary['revenue']
+print(summary)
+          </code></pre>
+          <aside class="notes">Walk through the code: data loading, aggregation, margin computation. Mention reproducibility and data lineage.</aside>
+        </section>
+
+        <!-- Math / financial formula -->
+        <section>
+          <h2>Financial Formula</h2>
+          <p>Weighted Average Cost of Capital (WACC):</p>
+          <p>\[\text{WACC} = \frac{E}{V}R_e + \frac{D}{V}R_d(1 - T_c)\]</p>
+          <aside class="notes">Explain each term: E = equity, D = debt, V = E + D, Re = cost of equity, Rd = cost of debt, Tc = tax rate.</aside>
+        </section>
+
+        <!-- Live chart placeholder + update on slide change -->
+        <section id="chart-slide">
+          <h2>Revenue Trend (Interactive)</h2>
+          <div id="chart" class="chart" aria-label="Revenue chart placeholder"></div>
+          <aside class="notes">When this slide appears, we reveal the chart and call out Q3 vs prior quarters. Use the visual to support the top-line narrative.</aside>
+        </section>
+
+        <!-- Speaker notes demo slide -->
+        <section>
+          <h2>Closing</h2>
+          <p>Questions & next meeting: Review action items and timelines.</p>
+          <aside class="notes">End with clear asks and owners. Invite questions and reference appendix for detailed KPIs.</aside>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- RevealJS + plugins (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/plugin/markdown/markdown.esm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/plugin/highlight/highlight.esm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/plugin/math/math.esm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/plugin/notes/notes.esm.js"></script>
+
+    <!-- KaTeX for math rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
+
+    <script>
+      // Initialize Reveal
+      Reveal.initialize({
+        width: 1280,
+        height: 720,
+        margin: 0.04,
+        controls: true,
+        progress: true,
+        history: true,
+        transition: 'slide',
+        plugins: [ RevealMarkdown, RevealHighlight, RevealMath, RevealNotes ],
+        math: {
+          // KaTeX is loaded via CDN above
+          katex: window.katex
+        }
+      });
+
+      // Example: lazy-render a simple SVG chart when the slide is shown
+      function drawChart() {
+        const container = document.getElementById('chart');
+        if (!container || container.dataset.rendered) return;
+        container.dataset.rendered = '1';
+
+        // minimal SVG sparkline (replace with D3/Plot for production)
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('viewBox','0 0 600 200');
+        svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+
+        const points = [100,120,140,150,170,160,180];
+        const path = document.createElementNS(svgNS,'path');
+        const step = 600/(points.length-1);
+        let d = '';
+        points.forEach((p,i)=> d += (i===0? 'M':'L') + (i*step) + ' ' + (200 - p) + ' ');
+        path.setAttribute('d', d);
+        path.setAttribute('fill','none');
+        path.setAttribute('stroke','black');
+        path.setAttribute('stroke-width','2');
+        svg.appendChild(path);
+        container.appendChild(svg);
+      }
+
+      Reveal.on('slidechanged', function(event) {
+        if (event.currentSlide && event.currentSlide.id === 'chart-slide') drawChart();
+      });
+
+      // Optionally draw chart if user starts on that slide
+      if (document.location.hash && document.location.hash.includes('#/chart-slide')) drawChart();
+    </script>
+  </body>
 </html>
